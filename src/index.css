@@ -359,6 +359,126 @@ button {
     -10px 0px;
 }
 
+/* ---------- Crop tool ---------- */
+
+.crop-frame {
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  overflow: hidden;
+  line-height: 0;
+  touch-action: none;
+}
+
+.crop-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.crop-selection {
+  position: absolute;
+  border: 1.5px solid #fff;
+  outline: 1px solid var(--accent);
+  box-shadow: 0 0 0 9999px rgba(17, 15, 30, 0.45);
+  cursor: move;
+}
+
+.crop-handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.crop-handle-nw {
+  left: 0;
+  top: 0;
+  cursor: nwse-resize;
+}
+
+.crop-handle-ne {
+  left: 100%;
+  top: 0;
+  cursor: nesw-resize;
+}
+
+.crop-handle-sw {
+  left: 0;
+  top: 100%;
+  cursor: nesw-resize;
+}
+
+.crop-handle-se {
+  left: 100%;
+  top: 100%;
+  cursor: nwse-resize;
+}
+
+.crop-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.aspect-group {
+  display: flex;
+  gap: 6px;
+}
+
+.chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chip-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.crop-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary:disabled:hover {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.crop-error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  text-align: center;
+  margin: -8px 0 0;
+}
+
 .result-actions {
   display: flex;
   gap: 12px;

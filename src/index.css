@@ -613,3 +613,20 @@ button {
   color: var(--text-muted);
   text-decoration: underline;
 }
+
+/* ---------- Ko-fi support ---------- */
+.kofi-static {
+  text-align: center;
+  padding: 12px 20px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.kofi-static-text {
+  margin: 0 0 14px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+.kofi-static .btn-container,
+.kofi-static .kofi-button {
+  margin: 0 auto;
+}

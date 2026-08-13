@@ -615,18 +615,29 @@ button {
 }
 
 /* ---------- Ko-fi support ---------- */
-.kofi-static {
-  text-align: center;
-  padding: 12px 20px 20px;
-  max-width: 960px;
-  margin: 0 auto;
+.kofi-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 16px;
+  background: var(--accent-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
-.kofi-static-text {
-  margin: 0 0 14px;
-  color: var(--text-muted);
+.kofi-banner-text {
+  color: var(--text);
   font-size: 0.9rem;
+  font-weight: 600;
 }
-.kofi-static .btn-container,
-.kofi-static .kofi-button {
-  margin: 0 auto;
+.kofi-widget {
+  display: inline-flex;
+  align-items: center;
+}
+.kofi-widget .btn-container,
+.kofi-widget .kofi-button {
+  margin: 0;
 }

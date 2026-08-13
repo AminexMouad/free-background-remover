@@ -7,20 +7,20 @@
 
     <title>Free Background Remover — Remove Image Backgrounds Online, No Sign-up</title>
     <meta
-      name="description"
-      content="Remove the background from any photo for free, right in your browser. No sign-up, no watermark, no upload — your image never leaves your device. Download a transparent PNG in seconds."
+     name="description"
+     content="Remove the background from any photo for free, right in your browser. No sign-up, no watermark, no upload — your image never leaves your device. Download a transparent PNG in seconds."
     />
     <meta
-      name="keywords"
-      content="free background remover, remove image background, transparent png, background eraser, remove photo background online"
+     name="keywords"
+     content="free background remover, remove image background, transparent png, background eraser, remove photo background online"
     />
     <link rel="canonical" href="https://bgremove.app/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Free Background Remover — Remove Image Backgrounds Online" />
     <meta
-      property="og:description"
-      content="Remove the background from any photo for free, right in your browser. No sign-up, no watermark, no upload — your image never leaves your device."
+     property="og:description"
+     content="Remove the background from any photo for free, right in your browser. No sign-up, no watermark, no upload — your image never leaves your device."
     />
     <meta property="og:url" content="https://bgremove.app/" />
     <meta property="og:site_name" content="Free Background Remover" />
@@ -28,24 +28,33 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Free Background Remover — Remove Image Backgrounds Online" />
     <meta
-      name="twitter:description"
-      content="Remove the background from any photo for free, right in your browser. No sign-up, no watermark, no upload."
+     name="twitter:description"
+     content="Remove the background from any photo for free, right in your browser. No sign-up, no watermark, no upload."
     />
 
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#7c3aed" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQ7TKDR8KR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WQ7TKDR8KR');
+    </script>
   </head>
   <body>
+    <!-- Support / Buy me a Coffee — top banner, always visible before the app -->
+    <div class="kofi-banner">
+      <span class="kofi-banner-text">Loving this free tool?</span>
+      <span class="kofi-widget">
+        <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Buy me a Coffee', '#72a4f2', 'V7V014CIST');kofiwidget2.draw();</script>
+      </span>
+    </div>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- Support / Buy me a Coffee -->
-    <div class="kofi-static">
-      <p class="kofi-static-text">
-        Enjoying this free tool? It&rsquo;s 100% free and runs entirely in your browser &mdash; a
-        coffee keeps it online.
-      </p>
-      <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Buy me a Coffee on Ko-fi', '#72a4f2', 'V7V014CIST');kofiwidget2.draw();</script>
-    </div>
   </body>
 </html>

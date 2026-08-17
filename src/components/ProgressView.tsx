@@ -1,13 +1,15 @@
 interface ProgressViewProps {
   label: string
   percent: number | null
+  /** Headline above the bar; defaults to the plain background-removal wording. */
+  title?: string
 }
 
-export function ProgressView({ label, percent }: ProgressViewProps) {
+export function ProgressView({ label, percent, title }: ProgressViewProps) {
   return (
     <div className="progress-view" role="status" aria-live="polite">
       <div className="spinner" aria-hidden="true" />
-      <h2>Removing background&hellip;</h2>
+      <h2>{title ?? 'Removing background…'}</h2>
       <p>{label}</p>
       <div
         className="progress-bar"

@@ -1,20 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import './index.css'
 import { DropZone } from './components/DropZone'
-import { ProgressView } from './components/ProgressView'
 import { ErrorView } from './components/ErrorView'
 import { ResultView } from './components/ResultView'
-import { removeImageBackground, validateImageFile, type RemovalProgress } from './lib/backgroundRemoval'
+import { SelectObjectsView } from './components/SelectObjectsView'
+import { validateImageFile } from './lib/backgroundRemoval'
 
-type Stage = 'idle' | 'processing' | 'done' | 'error'
-
-function progressLabel(progress: RemovalProgress | null): string {
-  if (!progress) return 'Warming up the model in your browser…'
-  if (progress.key.startsWith('fetch')) {
-    return 'Downloading the AI model (first time only)…'
-  }
-  return 'Analyzing your image…'
-}
+// 'select' owns the model run and its progress UI: it removes the background,
+// offers the detected objects to keep, and hands back the finished PNG.
+type Stage = 'idle' | 'select' | 'done' | 'error'
 
 function downloadNameFor(file: File): string {
   const base = file.name.replace(/\.[^/.]+$/, '') || 'image'
@@ -23,11 +17,11 @@ function downloadNameFor(file: File): string {
 
 function App() {
   const [stage, setStage] = useState<Stage>('idle')
+  const [file, setFile] = useState<File | null>(null)
   const [originalUrl, setOriginalUrl] = useState<string | null>(null)
   const [resultUrl, setResultUrl] = useState<string | null>(null)
   const [downloadName, setDownloadName] = useState('image-no-bg.png')
   const [errorMessage, setErrorMessage] = useState('')
-  const [progress, setProgress] = useState<RemovalProgress | null>(null)
   const objectUrlsRef = useRef<string[]>([])
 
   useEffect(() => {
@@ -44,42 +38,42 @@ function App() {
   const reset = useCallback(() => {
     objectUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
     objectUrlsRef.current = []
+    setFile(null)
     setOriginalUrl(null)
     setResultUrl(null)
-    setProgress(null)
     setErrorMessage('')
     setStage('idle')
   }, [])
 
   const handleFile = useCallback(
-    async (file: File) => {
-      const validationError = validateImageFile(file)
+    (selectedFile: File) => {
+      const validationError = validateImageFile(selectedFile)
       if (validationError) {
         setErrorMessage(validationError)
         setStage('error')
         return
       }
 
-      const localOriginalUrl = trackUrl(URL.createObjectURL(file))
-      setOriginalUrl(localOriginalUrl)
-      setDownloadName(downloadNameFor(file))
-      setProgress(null)
-      setStage('processing')
-
-      try {
-        const blob = await removeImageBackground(file, setProgress)
-        setResultUrl(trackUrl(URL.createObjectURL(blob)))
-        setStage('done')
-      } catch (err) {
-        console.error('Background removal failed', err)
-        setErrorMessage(
-          'We could not process this image in your browser. Try a smaller image, or a different browser with WebAssembly support.',
-        )
-        setStage('error')
-      }
+      setOriginalUrl(trackUrl(URL.createObjectURL(selectedFile)))
+      setDownloadName(downloadNameFor(selectedFile))
+      setFile(selectedFile)
+      setStage('select')
     },
     [trackUrl],
   )
+
+  const handleCutout = useCallback(
+    (blob: Blob) => {
+      setResultUrl(trackUrl(URL.createObjectURL(blob)))
+      setStage('done')
+    },
+    [trackUrl],
+  )
+
+  const handleFailure = useCallback((message: string) => {
+    setErrorMessage(message)
+    setStage('error')
+  }, [])
 
   return (
     <>
@@ -108,14 +102,13 @@ function App() {
 
         <div className="tool-card">
           {stage === 'idle' && <DropZone onFile={handleFile} />}
-          {stage === 'processing' && (
-            <ProgressView
-              label={progressLabel(progress)}
-              percent={
-                progress && progress.total > 0
-                  ? Math.round((progress.current / progress.total) * 100)
-                  : null
-              }
+          {stage === 'select' && file && originalUrl && (
+            <SelectObjectsView
+              file={file}
+              imageUrl={originalUrl}
+              onConfirm={handleCutout}
+              onCancel={reset}
+              onFailure={handleFailure}
             />
           )}
           {stage === 'error' && <ErrorView message={errorMessage} onRetry={reset} />}
